@@ -50,7 +50,7 @@ def login():
 
         if usuario and check_password_hash(usuario.senha, senha):
             login_user(usuario)
-            return redirect(url_for('main.index'))
+            return redirect(url_for('main.dashboard'))
 
         return "Login inválido"
 
@@ -61,3 +61,8 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('main.index'))
+
+@main.route('/dashboard')
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
