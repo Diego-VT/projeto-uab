@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Equipamentos</title>
-</head>
-<body>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div>
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+{% extends 'base.html' %}
+
+{% block title %}Equipamentos{% endblock %}
+
+{% block content %}
     <h1>Lista de Equipamentos</h1>
 
     <p>
@@ -21,9 +10,7 @@
     </p>
 
     <p>
-        <a href="{{ url_for('main.cadastro_equipamento') }}">
-            Cadastrar Equipamento
-        </a>
+        <a href="{{ url_for('main.cadastro_equipamento') }}">Cadastrar Equipamento</a>
     </p>
 
     {% if equipamentos %}
@@ -37,7 +24,6 @@
                     <th>Ações</th>
                 </tr>
             </thead>
-
             <tbody>
                 {% for equipamento in equipamentos %}
                     <tr>
@@ -46,11 +32,7 @@
                         <td>{{ equipamento.patrimonio }}</td>
                         <td>{{ equipamento.descricao }}</td>
                         <td>
-                            <a href="{{ url_for('main.editar_equipamento', id=equipamento.id) }}">
-                                Editar
-                            </a>
-
-                            |
+                            <a href="{{ url_for('main.editar_equipamento', id=equipamento.id) }}">Editar</a>
 
                             <form action="{{ url_for('main.excluir_equipamento', id=equipamento.id) }}"
                                   method="POST"
@@ -66,5 +48,4 @@
     {% else %}
         <p>Nenhum equipamento cadastrado.</p>
     {% endif %}
-</body>
-</html>
+{% endblock %}

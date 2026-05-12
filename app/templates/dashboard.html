@@ -1,20 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-</head>
-<body> 
+{% extends 'base.html' %}
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div>
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
     <h1>Área Restrita</h1>
 
     <p>Você está logado como:</p>
@@ -25,5 +13,4 @@
     <a href="/equipamentos/cadastro">Cadastrar Equipamento</a><br><br>
     <a href="/equipamentos">Listar Equipamentos</a><br><br>
     <a href="/logout">Sair</a>
-</body>
-</html>
+{% endblock %}
