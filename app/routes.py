@@ -1,3 +1,4 @@
+from app.models.equipment import Equipment
 from flask_login import logout_user, login_required
 from flask_login import login_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -66,3 +67,62 @@ def logout():
 @login_required
 def dashboard():
     return render_template('dashboard.html')
+
+@main.route('/equipamentos/cadastro', methods=['GET', 'POST'])
+@login_required
+def cadastro_equipamento():
+    if request.method == 'POST':
+        nome = request.form['nome']
+        patrimonio = request.form['patrimonio']
+        descricao = request.form['descricao']
+
+        equipamento = Equipment(
+            nome=nome,
+            patrimonio=patrimonio,
+            descricao=descricao
+        )
+
+        db.session.add(equipamento)
+        db.session.commit()
+
+        return redirect(url_for('main.dashboard'))
+
+    return render_template('equipamento_cadastro.html')
+
+@main.route('/equipamentos')
+@login_required
+def listar_equipamentos():
+    equipamentos = Equipment.query.order_by(Equipment.id.desc()).all()
+    return render_template(
+        'equipamentos.html',
+        equipamentos=equipamentos
+    )
+@main.route('/equipamentos/excluir/<int:id>', methods=['POST'])
+@login_required
+def excluir_equipamento(id):
+    equipamento = Equipment.query.get_or_404(id)
+
+    db.session.delete(equipamento)
+    db.session.commit()
+
+    return redirect(url_for('main.listar_equipamentos'))
+
+
+@main.route('/equipamentos/editar/<int:id>', methods=['GET', 'POST'])
+@login_required
+def editar_equipamento(id):
+    equipamento = Equipment.query.get_or_404(id)
+
+    if request.method == 'POST':
+        equipamento.nome = request.form['nome']
+        equipamento.patrimonio = request.form['patrimonio']
+        equipamento.descricao = request.form['descricao']
+
+        db.session.commit()
+
+        return redirect(url_for('main.listar_equipamentos'))
+
+    return render_template(
+        'equipamento_editar.html',
+        equipamento=equipamento
+    )

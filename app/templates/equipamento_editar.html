@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Equipamento</title>
+</head>
+<body>
+    <h1>Editar Equipamento</h1>
+
+    <form method="POST">
+        <p>
+            <label for="nome">Nome:</label><br>
+            <input
+                type="text"
+                id="nome"
+                name="nome"
+                value="{{ equipamento.nome }}"
+                required
+            >
+        </p>
+
+        <p>
+            <label for="patrimonio">Patrimônio:</label><br>
+            <input
+                type="text"
+                id="patrimonio"
+                name="patrimonio"
+                value="{{ equipamento.patrimonio }}"
+                required
+            >
+        </p>
+
+        <p>
+            <label for="descricao">Descrição:</label><br>
+            <textarea
+                id="descricao"
+                name="descricao"
+                rows="4"
+                cols="50"
+                required
+            >{{ equipamento.descricao }}</textarea>
+        </p>
+
+        <button type="submit">Salvar Alterações</button>
+    </form>
+
+    <p>
+        <a href="{{ url_for('main.listar_equipamentos') }}">Voltar para lista</a>
+    </p>
+</body>
+</html>
