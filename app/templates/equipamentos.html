@@ -3,49 +3,63 @@
 {% block title %}Equipamentos{% endblock %}
 
 {% block content %}
-    <h1>Lista de Equipamentos</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Lista de Equipamentos</h1>
+
+        <a href="{{ url_for('main.cadastro_equipamento') }}" class="btn btn-primary">
+            Cadastrar Equipamento
+        </a>
+    </div>
 
     <p>
-        <a href="{{ url_for('main.dashboard') }}">Voltar ao Dashboard</a>
-    </p>
-
-    <p>
-        <a href="{{ url_for('main.cadastro_equipamento') }}">Cadastrar Equipamento</a>
+        <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-secondary btn-sm">
+            Voltar ao Dashboard
+        </a>
     </p>
 
     {% if equipamentos %}
-        <table border="1" cellpadding="8">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Patrimônio</th>
-                    <th>Descrição</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for equipamento in equipamentos %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
                     <tr>
-                        <td>{{ equipamento.id }}</td>
-                        <td>{{ equipamento.nome }}</td>
-                        <td>{{ equipamento.patrimonio }}</td>
-                        <td>{{ equipamento.descricao }}</td>
-                        <td>
-                            <a href="{{ url_for('main.editar_equipamento', id=equipamento.id) }}">Editar</a>
-
-                            <form action="{{ url_for('main.excluir_equipamento', id=equipamento.id) }}"
-                                  method="POST"
-                                  style="display: inline;"
-                                  onsubmit="return confirm('Deseja realmente excluir este equipamento?');">
-                                <button type="submit">Excluir</button>
-                            </form>
-                        </td>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Patrimônio</th>
+                        <th>Descrição</th>
+                        <th class="text-center">Ações</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                    {% for equipamento in equipamentos %}
+                        <tr>
+                            <td>{{ equipamento.id }}</td>
+                            <td>{{ equipamento.nome }}</td>
+                            <td>{{ equipamento.patrimonio }}</td>
+                            <td>{{ equipamento.descricao }}</td>
+                            <td class="text-center">
+                                <a href="{{ url_for('main.editar_equipamento', id=equipamento.id) }}"
+                                   class="btn btn-sm btn-warning">
+                                    Editar
+                                </a>
+
+                                <form action="{{ url_for('main.excluir_equipamento', id=equipamento.id) }}"
+                                      method="POST"
+                                      class="d-inline"
+                                      onsubmit="return confirm('Deseja realmente excluir este equipamento?');">
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        Excluir
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% else %}
-        <p>Nenhum equipamento cadastrado.</p>
+        <div class="alert alert-info">
+            Nenhum equipamento cadastrado.
+        </div>
     {% endif %}
 {% endblock %}
