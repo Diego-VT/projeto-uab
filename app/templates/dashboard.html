@@ -4,7 +4,17 @@
     <meta charset="UTF-8">
     <title>Dashboard</title>
 </head>
-<body>
+<body> 
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     <h1>Área Restrita</h1>
 
     <p>Você está logado como:</p>

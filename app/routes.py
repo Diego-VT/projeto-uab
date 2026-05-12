@@ -2,7 +2,7 @@ from app.models.equipment import Equipment
 from flask_login import logout_user, login_required
 from flask_login import login_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app import db
 from app.models.user import User
 
@@ -84,7 +84,8 @@ def cadastro_equipamento():
 
         db.session.add(equipamento)
         db.session.commit()
-
+  
+        flash('Equipamento cadastrado com sucesso!', 'success') 
         return redirect(url_for('main.dashboard'))
 
     return render_template('equipamento_cadastro.html')
@@ -105,6 +106,7 @@ def excluir_equipamento(id):
     db.session.delete(equipamento)
     db.session.commit()
 
+    flash('Equipamento excluído com sucesso!', 'success')
     return redirect(url_for('main.listar_equipamentos'))
 
 
@@ -119,7 +121,8 @@ def editar_equipamento(id):
         equipamento.descricao = request.form['descricao']
 
         db.session.commit()
-
+    
+        flash('Equipamento atualizado com sucesso!', 'success')
         return redirect(url_for('main.listar_equipamentos'))
 
     return render_template(
